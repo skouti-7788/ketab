@@ -1,0 +1,28 @@
+.share{
+  background: rgb(220, 221, 220);
+  width: 400px;
+  height: 350px;
+  position: fixed;
+  top:20%;
+  left: 35%;
+  border-radius: 10px;
+
+}
+.share ul li{
+    text-align: center;
+    list-style: none;
+    border: solid rgb(167, 166, 166) 1px;
+    margin: 15px 15px  0 -5px;
+    padding: 15px  0 ;
+    border-radius:10px ;
+    cursor: pointer;
+}
+.share ul li a{
+    text-decoration: none;
+    color: black;
+    margin-left: 5px;
+}
+.share ul li a:hover{
+    /* background: rgb(157, 247, 157); */
+    color: rgb(159, 250, 150);
+}

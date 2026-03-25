@@ -1,0 +1,66 @@
+.detailes{
+    display: flex;
+    gap: 2%;
+   padding-left: 2%;
+   margin-top: 50px;
+}
+.detailes .img{
+    border: solid rgb(199, 198, 198) 1px ;
+    padding: 20px;
+    /* border-radius: 10px; */
+
+}
+.detailes .ifno{
+    border: solid rgb(199, 198, 198) 1px ;
+    /* border-radius: 10px; */
+    width: 67%;
+    padding: 20px;
+
+}
+.detailes .btn-book{
+    padding: 40px;
+    display: flex;
+    justify-content: space-around;
+}
+.detailes .btn-book p{
+    border: none;
+    width: fit-content;
+    padding: 10px;
+    background: rgb(183, 219, 221);
+    border-radius:10px ;
+    cursor:pointer;
+}
+.detailes .btn-book p:hover{
+    background: rgb(150, 190, 192);
+
+}
+.discrip{
+    border: solid rgb(199, 198, 198) 1px ;
+    /* border-radius: 10px; */
+    width: 97%;
+    padding: 20px;
+    margin: 20px;
+    height: 200px;
+
+}
+.opinions{
+    padding: 20px;
+    border: solid rgb(199, 198, 198) 1px;
+    margin: 20px;
+
+}
+.opinions .opinion{
+    padding: 20px;
+    border-radius: 5px;
+}
+.opinions .opinion .user{
+    display: flex;
+    gap:9px;
+}
+.opinions .opinion:hover{
+    background:rgb(228, 226, 226)  ;
+}
+.opinions .opinion .user img{
+    border-radius: 50px;
+    width: 40px;
+}

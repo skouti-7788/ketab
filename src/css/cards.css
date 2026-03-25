@@ -1,0 +1,98 @@
+.cards-f{
+    margin-top:100px;
+}
+.cards{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    /* width: 96%; */
+   
+}
+.cards-f h3{
+    margin:  0 0 10px 20px;
+    /* padding-top: 100px; */
+
+}
+/* .cards-f h4{
+    text-align: end;
+    margin-top: 20px;
+    cursor: pointer;
+    color: rgb(87, 163, 87);
+} */
+.cards-h{
+    width: 97%;
+    border: solid rgb(204, 223, 197) 1px;
+    background: rgb(231, 252, 230);
+    margin: 0 0 50px 20px;
+    padding: 20px;
+}
+.cards .card {
+    width: 230px;
+    height: 340px;
+    margin-top: 20px;
+    position: relative;
+
+}
+.cards .card img{
+    width: 230px;
+    height: 340px;
+    border-radius: 5px;
+    /* width: 200px;
+    height: 250px; */
+    
+    
+}
+.cards .card::before{
+    content:'';
+    background: rgba(0, 0, 0, 0.5);
+    width: 230px;
+    height: 340px;
+    border-radius: 5px;
+    position: absolute;
+    inset: 0; 
+    opacity: 0;
+    transition:  0.3s;
+    /* cursor: pointer; */
+}
+.cards .card h3,h4{
+    height: 30px;
+}
+.cards .card .detail{
+    position: absolute;
+    top: 45%;
+    left: 30%;
+    width: 80px;
+    height: 44px;
+    background: rgb(102, 188, 197);
+    border: none;
+    border-radius: 20px;
+    
+    box-shadow:0 0 30px rgb(19, 193, 212);
+    transition:  1s;
+    opacity:0;
+    cursor: pointer;
+}
+.cards .card:hover .detail,
+.cards .card:hover::before{
+    opacity: 1;
+}
+.Next-Back{
+    font-size: 30px;
+    margin: 20px  ;
+    display: flex;
+    justify-content: end;
+    gap:6%;
+    cursor: pointer;
+   
+}
+.Next-Back h4{
+    padding: 5px;
+    height: 40px;
+    background: rgb(87, 163, 87);
+
+}
+.Next-Back h4:hover{
+    background: rgb(87, 163, 87);
+    border-radius: 10px;
+    color: white;
+}

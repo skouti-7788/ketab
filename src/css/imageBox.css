@@ -1,0 +1,53 @@
+.image-box{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    font-size: 25px;
+    margin-top: 40px;
+    background: rgba(174, 240, 183, 0.5);
+    height: 40vh;
+    padding: 10px 0;
+    
+}
+.image-box h3,.h4{
+    margin-left:4% ;
+    color: #173f42;
+}
+.image-box input{
+    width: 50%;
+    margin-left: 25%;
+    height: 20px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    padding: 20px;
+    font-size: 20px;
+}
+.cont-books{
+    background: rgba(255, 255, 255, 0.5);
+    width: 97%;
+    padding: 20px;
+    margin-left: 20px;
+    /* box-shadow: 0 -1px 3px gray; */
+}
+.cont-books ul{
+    height: fit-content;
+    display:flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.cont-books ul li{
+    margin-top: 10px;
+    list-style: none;
+    cursor: pointer;
+    padding: 15px;
+    border: rgb(176, 226, 175) solid 1px;
+     
+
+}
+.cont-books ul li:hover{
+    background: rgb(140, 207, 145);
+    border-radius: 10px;
+}

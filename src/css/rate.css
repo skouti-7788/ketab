@@ -1,0 +1,18 @@
+.favorie{
+  background: rgb(220, 221, 220);
+  width: 400px;
+  height: 350px;
+  position: fixed;
+  top:20%;
+  left: 35%;
+  border-radius: 10px;
+
+}
+.favorie ul li{
+    list-style: none;
+    border: solid rgb(167, 166, 166) 1px;
+    margin: 15px 15px  0 -5px;
+    padding: 10px;
+    border-radius:10px ;
+    cursor: pointer;
+}

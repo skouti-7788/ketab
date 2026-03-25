@@ -1,0 +1,25 @@
+.footer{
+    display:flex;
+    justify-content: space-around;
+    gap: 5%;
+    flex-wrap: wrap;
+}
+.footer .about{
+    width: 350px;
+}
+.about p ,.tems p , .contact p {
+   font-size: 15px;
+   color: rgb(184, 182, 182);
+   padding-left: 25px;
+}
+.contact h4,.tems h4{
+    margin-right: 150px;
+}
+
+.contact p {
+    width: 300px;
+    cursor: pointer;
+}
+.contact p:hover{
+    color: rgb(253, 232, 232);
+}

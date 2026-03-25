@@ -1,0 +1,37 @@
+import './App.css';
+import Home from './pages/home';
+import Loguser from './pages/log';
+import Detailes from './pages/details';
+import  Panier from './components/home/panier'
+import  Footer from './components/home/footer'
+import Rate from './pages/rate'
+import Share from './pages/share' 
+import { useSelector } from "react-redux";
+import { BrowserRouter,Routes,Route } from 'react-router-dom';
+import Opinion from './pages/opinion';
+function App() {
+  const show = useSelector((state)=> state.loguser);
+  const showrate = useSelector((state)=> state.detailescard)
+  return (
+    <BrowserRouter>  
+        <div  style={{filter:show.show || showrate.showrate || showrate.showfavorite || showrate.showopinion || showrate.showshare?'blur(5px)':''}}className="App">
+          <Panier/> 
+          <Routes>
+            <Route path='/' element={<Home/> }/>
+            <Route path='/detailes/:id' element={ <Detailes/>}/>
+           </Routes>
+          
+          <Footer/>
+          
+       </div>
+        <Opinion/>
+        <Rate/> 
+        <Share/>
+        <Loguser/>
+       
+    </BrowserRouter>
+    
+  );
+}
+
+export default App;

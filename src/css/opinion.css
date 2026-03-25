@@ -1,0 +1,41 @@
+.input-opinion{
+  width: 450px;
+  height: auto;
+  position: fixed;
+  top:20%;
+  left: 35%;
+  border-radius: 10px;
+}
+.input-opinion .textarea{
+    background: rgb(255, 255, 255);
+    width: 400px;
+    height: fit-content;
+    padding: 20px;
+    border-radius:  10px 0 10px 10px;
+
+}
+.input-opinion .textarea textarea{
+    margin-left: 20px;
+    width: 350px;
+    padding: 5px;
+}
+.input-opinion p{
+    text-align: center;
+    cursor: pointer;
+    background-color: bisque;
+    width: 40px;
+    height: 30px;
+    border-radius: 30px;
+    margin-left: 90%;
+}
+.input-opinion .textarea button{
+    border: solid rgb(173, 252, 208) 1px;
+    margin: 15px 15px  0 80%;
+    padding: 8px;
+    border-radius:10px ;
+    cursor: pointer;
+}
+.input-opinion .textarea button:hover{
+    background: rgb(167, 238, 170);
+
+}
