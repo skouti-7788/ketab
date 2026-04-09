@@ -14,10 +14,11 @@
 .sign .form{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 15px;
     /* margin-top: 10px; */
 }
-.sign p{
+.sign span{
     text-align: end;
     cursor: pointer;
     font-size: 20px;

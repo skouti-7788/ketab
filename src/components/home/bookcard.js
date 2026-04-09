@@ -1,11 +1,14 @@
-// import useBookCover from './useBookCover';
-// import { setOneCard,setHide } from "../../app/redux/cardsSlice";
+import { useFavorite } from '../../app/data/favoriteData';
+import { useShowlivres } from '../../app/data/showlivresData';
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
-// import { useDispatch } from "react-redux";
 export default function BookCard({book}) {
-    // const cover = useBookCover(book.title,book.author);
-    // console.log(book.image)
-    // const dispatch = useDispatch()
+    // const { fetchFavorite  } = useFavorite();
+    // const { fetchShowlivres}  = useShowlivres();
+    // useEffect(() => {
+    //     fetchFavorite();
+    //     fetchShowlivres();
+    // }, [])
     const navigaie = useNavigate()
     return (
         <div className='card'>

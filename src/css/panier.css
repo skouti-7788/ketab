@@ -14,16 +14,16 @@
     animation: tada 1.5s infinite ;
 }
 .containre ul{
-    width: 70%;
+    width: 60%;
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
     flex-wrap: wrap;
     
+    
 
 }
 .containre ul li{
-
     list-style: none;
     cursor: pointer;
     position: relative;
@@ -41,5 +41,14 @@
    border:solid rgb(157, 228, 157) 1px;
    width: 90px;
    border-radius: 5px;
+   text-align: center;
+}
+.containre .profile{
+   background: rgb(157, 228, 157) 1px;
+   width: 45px;
+   height: 45px;
+   border-radius: 50%;
+   margin-top: 10px;
+   margin-left: -200px;
    text-align: center;
 }

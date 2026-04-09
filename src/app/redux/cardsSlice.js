@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {books} from '../data/database';
+// import {books} from '../data/database';
 import { categories } from "../data/database";
-// import {booksDescription} from '../data/database'
 const cardsSlice = createSlice({
     name:'cards',
     initialState:{
-        cards:books,
+        livres:[],
+        cards:[],
         search:'',
         categories:categories,
         hidCard:true,
@@ -20,10 +20,11 @@ const cardsSlice = createSlice({
 
     },
     reducers:{
-            Filter:(state,action) =>{state.cards = books.filter((b)=> b.category === action.payload ,state.onecat = action.payload)},
-            AllBooks:(state) => {state.cards = books},
-            SearshBar:(state,action)=> {state.cards = books.filter((b)=> b.title.toLowerCase().includes(action.payload),state.search= action.payload)
-},
+            setLivres:(state,action)=>{state.cards = action.payload;state.livres = action.payload},
+            Filter:(state,action) =>{state.cards = state.livres.filter((b)=> b.category === action.payload); state.onecat = action.payload},
+            AllBooks:(state) => {state.cards = state.livres},
+            SearshBar:(state,action)=> {state.cards = state.livres.filter((b)=> b.title.toLowerCase().includes(action.payload.toLowerCase())); state.search = action.payload},
+
     //         setOneCard:(state,action)=> {state.OneCard = action.payload },
             setHide:(state,action)=> {state.hide = action.payload },
             sethidCard:(state,action)=> {state.hidCard = action.payload },
@@ -43,5 +44,5 @@ const cardsSlice = createSlice({
 })
 export const {Filter,AllBooks,SearshBar,setOneCard,setHide,sethidCard,
               setNextNew,setBackNew,setBackShow,setNextShow,clearNextBack,
-              setshowSearch} = cardsSlice.actions;
+              setshowSearch,setLivres} = cardsSlice.actions;
 export default cardsSlice.reducer;

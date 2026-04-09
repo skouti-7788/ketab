@@ -3,9 +3,10 @@ import k from '../../images/k.png'
 import title from'../../images/titlebooks.png'
 import { useDispatch,useSelector } from 'react-redux';
 import { Filter,AllBooks,sethidCard,clearNextBack} from '../../app/redux/cardsSlice';
-import { Show,setOk } from '../../app/redux/logSlice';
+import { Show,setOk,setClose } from '../../app/redux/logSlice';
 import {useNavigate} from 'react-router-dom';
 // import axios from 'axios';
+import{ setShowProfile} from '../../app/redux/profileSlice';
 import api from '../../api/axios';
 export default function Panier(){
     const books = useSelector((state)=> state.cards)
@@ -29,14 +30,20 @@ export default function Panier(){
         try {
             await api.post("/logout");
             localStorage.removeItem('ok');
-            localStorage.removeItem('token');   
-            // console.log("Logged out");
+            localStorage.removeItem('token'); 
+            localStorage.removeItem('user');  
+            navigate('/')
             dispatch(setOk(false));
         } catch (err) {
             console.log("Logout failed", err.response?.data);
         }
-    };    
-    console.log(books)
+    };  
+    // console.log(ok.close)  
+    if(ok.close){
+        logout();
+        dispatch(setClose(null))
+    }
+     
     return(
        <div className='containre'>
             <div>
@@ -52,17 +59,15 @@ export default function Panier(){
                         <option key={cat.id} value={cat.name}>{cat.name}</option>)}
                     </select>
                 </li>
-                <li onClick={()=>dispatch(AllBooks())}>tous Catigorie</li>
-                <li>searsh</li>
-                {ok.ok&&<li>profile</li>}
-                <li className='Sign-out' onClick={logout}>Sign out</li>
+               {/* <li onClick={()=>dispatch(AllBooks())}>tous Catigorie</li>
+                <li>searsh</li> */}
+               
+                {ok.ok&&<li className='Sign-out' onClick={logout}>Sign out</li>}
                 <li className='Sign-in' onClick={()=>dispatch(Show(true))}>Sign in </li>
-                <li>
-                    <select>
-                       <option value='fr'>franch</option>
-                       <option value='ar'>arbic</option>
-                    </select>
-                </li>
+                
+               
             </ul>
+             {ok.ok&&<div  style={{ cursor: 'pointer', color:'rgba(186, 16, 238, 0.4)',fontSize:'30px'}} className='profile' onClick={()=>dispatch(setShowProfile(true))}>
+                {JSON.parse(localStorage.getItem('user')).username.charAt(0).toUpperCase()}</div>}
        </div>);
 }

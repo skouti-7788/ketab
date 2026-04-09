@@ -1,0 +1,17 @@
+.achcard{
+    border: rgb(190, 189, 189) solid 1px;
+    margin: 20px;
+    padding: 20px;
+}
+.achcard .achcard-info{
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+}
+.achcard .achcard-info button{
+    border: none;
+    background: rgb(161, 216, 184);
+    width: 150px;
+    height: 40px;
+    border-radius: 20px;
+}

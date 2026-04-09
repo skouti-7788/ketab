@@ -1,15 +1,38 @@
+.image-bg {
+    position: relative;
+    height: fit-content;
+    margin: 40px 20px 0;
+    overflow: hidden;
+}
+
+.image-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('../images/image-books.webp') center/cover no-repeat;
+    filter: blur(2px);
+    transform: scale(1.1);  
+    z-index: 0;
+}
+
 .image-box{
+    margin: 20px;
+     
+    background: rgba(174, 240, 183, 0.7);
+    height: fit-content;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1;
+    border-radius: 5px;
+    
+}
+.cont-searsh{
+    text-align: center;
     margin: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    text-align: center;
+    gap: 10px;
     font-size: 25px;
-    margin-top: 40px;
-    background: rgba(174, 240, 183, 0.5);
-    height: 40vh;
-    padding: 10px 0;
-    
 }
 .image-box h3,.h4{
     margin-left:4% ;
@@ -25,29 +48,30 @@
     padding: 20px;
     font-size: 20px;
 }
-.cont-books{
-    background: rgba(255, 255, 255, 0.5);
+.image-bg .cont-books{
+    /* background: rgba(255, 255, 255, 0.5); */
     width: 97%;
     padding: 20px;
     margin-left: 20px;
+    margin-top: 100px;
     /* box-shadow: 0 -1px 3px gray; */
 }
-.cont-books ul{
+.image-bg .cont-books ul{
     height: fit-content;
     display:flex;
     justify-content: space-around;
     flex-wrap: wrap;
 }
-.cont-books ul li{
+.image-bg .cont-books ul li{
     margin-top: 10px;
     list-style: none;
     cursor: pointer;
     padding: 15px;
-    border: rgb(176, 226, 175) solid 1px;
+    border: rgb(255, 255, 255) solid 1px;
      
 
 }
-.cont-books ul li:hover{
+.image-bg .cont-books ul li:hover{
     background: rgb(140, 207, 145);
     border-radius: 10px;
 }

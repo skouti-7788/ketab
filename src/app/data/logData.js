@@ -28,7 +28,7 @@ export  function useLog(){
     useEffect(()=>{ },[]);
     const addUsers = async (users) => {
     const res = await api.post(
-    "/users",{
+    "/register",{
           username: users.username ?? "",
           email: users.email ?? "",
           password: users.password ?? "",
@@ -38,7 +38,7 @@ export  function useLog(){
     
     console.log(res.data)
     // dispatch(addUser(res.data)); 
-  dispatch(setMessage(res.data.message))  };
+    dispatch(setMessage(res.data.message))  };
 
   const verUser = async (user) => {
     // console.log(email,password)
@@ -47,7 +47,10 @@ export  function useLog(){
        { email:user.email ,password:user.password },
       );
       // console.log(res.data)
+      if(res.data.user && res.data.token){
        localStorage.setItem('token', JSON.stringify(res.data.token));
+       localStorage.setItem('user', JSON.stringify(res.data.user));
+      }
       // const token = localStorage.getItem("token");
       // if(res.data.token){
       // const data = jwtDecode(res.data.token);

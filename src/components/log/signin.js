@@ -22,6 +22,7 @@ export default function SignIn(){
             password:'', 
         }) ;
     const [messageErr,setMessageErr] = useState('')
+    const [vide,setVide] = useState('')
     const show = useSelector((state)=> state.loguser);
     // console.log(show) 
     const dispatch = useDispatch();
@@ -55,6 +56,12 @@ export default function SignIn(){
                 dispatch(setOk(true));
                 dispatch(clearMessage());
                 localStorage.setItem("ok", true);
+                setVeruser({
+                    email:'',
+                    password:'',
+                })
+                dispatch(clearMessageErr())
+                setMessageErr('')
                 break;
             case "User not found":
                 alert("User not found");
@@ -64,6 +71,9 @@ export default function SignIn(){
             case 'Password incorrect':
                   setMessageErr('Password incorrect')
                 break;
+            case  'Les champs sont vides':
+                setVide('Les champs sont vides');
+                break;
             default:
                 dispatch(clearMessage());
                
@@ -72,7 +82,13 @@ export default function SignIn(){
     }, [show.message]); 
     const Validation =  ()=>{
         const isEmpty = Object.values(show.hide?user:veruser).every(v => v.trim() !== '') ;
+        if(!isEmpty){
+            dispatch(clearMessageErr())
+            setVide('Les champs sont vides');
+            return;
+        }   
         if(isEmpty){
+            setVide('')
         const valEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(show.hide?user.email:veruser.email);
         if(!valEmail){
             dispatch(setemailErr('email incorrect'))
@@ -82,17 +98,26 @@ export default function SignIn(){
             dispatch(setpasswordErr('password incorrect'))
         }
         if(user.password !== user.password_confirmation){
-            dispatch(setconfPassword('password_confirmation incorrect'))
+            dispatch(setconfPassword('password confirmation incorrect'))
         }
         if(show.hide&& valEmail&&valPassword&&user.password === user.password_confirmation){
             addUsers(user);
             // dispatch(Show(true));
+               
             dispatch(clearMessageErr())
         } 
+      
+        if(valPassword){
+            dispatch(setpasswordErr(''))
+        }
+
+        if(valEmail){
+              dispatch(setemailErr(''))
+            }
         if(!show.hide&&valPassword&& valEmail){ 
             // console.log(!show.hide,valPassword,valEmail)
-         verUser(veruser);
-          setMessageErr('');
+           verUser(veruser);
+           dispatch(clearMessageErr())
         }
     }
     }
@@ -101,25 +126,28 @@ export default function SignIn(){
     <>
         {show.show&&<div className="sign">
             <div>
-                <p onClick={()=>{dispatch(Show(false));dispatch(setShowFavorite(false))}}>x</p>
+                <span onClick={()=>{dispatch(Show(false));dispatch(setShowFavorite(false))}}>x</span>
                 <h3 style={{textAlign:'center'}}>inscription</h3>
                 <div className="form">
-                    {show.hide&&  <><label>username </label>
+                    {show.hide&&  
+                    <><label>username </label>
                     <input value={user.username} type='text' onChange={(e)=>setUser({...user,username:e.target.value})}/></>}
 
                     <label>email:</label>
                     <input value={show.hide?user.email:veruser.email} onChange={(e)=>show.hide?setUser({...user,email:e.target.value}):setVeruser({...veruser,email:e.target.value})} type='email'/>
-                    {show.hide&&show.emailErr&&<p style={{color:'red'}}>{show.emailErr}</p>}
+                    {show.emailErr&&<span style={{color:'red',fontSize:'14px'}}>{show.emailErr}</span>}
 
-                    <label>password:</label>
+                    <label style={{marginTop:'-5px'}}>password:</label>
                     <input value={show.hide?user.password:veruser.password} onChange={(e)=>show.hide?setUser({...user,password:e.target.value}):setVeruser({...veruser,password:e.target.value})} type='password'/>
-                    {show.hide&&show.passwordErr&&<p style={{color:'red'}}>{show.passwordErr}</p>}
-                    <p style={{color:'red'}}>{messageErr} </p>
+                    {show.passwordErr&&<span style={{color:'red',fontSize:'14px'}}>{show.passwordErr}</span>}
+                    <span style={{color:'red',fontSize:'14px'}}>{messageErr } </span>
 
-                    {show.hide&&<><label>confirme passsword:</label>
+                    {show.hide&&<>
+                    <label style={{marginTop:'-10px'}}>confirme passsword:</label>
                     <input value={user.password_confirmation} onChange={(e)=>setUser({...user,password_confirmation:e.target.value})} type='password'/></>}
-                    {show.hide&&show.confPassword&&<p style={{color:'red'}}>{show.confPassword}</p>}
-                    <span>{show.hide?'J\'ai un':'Je n\'ai pas de '}<span style={{color:'blue',cursor:'pointer'}} onClick={()=>dispatch(Hide(!show.hide))}> compte</span></span>
+                    {show.hide&&show.confPassword&&<span style={{color:'red',fontSize:'14px'}}>{show.confPassword}</span>}
+                    {vide&&<span style={{color:'red',fontSize:'14px'}}>{vide}</span>}
+                    <div style={{marginTop:'-2px'}}>{show.hide?'J\'ai un':'Je n\'ai pas de '}<span style={{color:'blue',cursor:'pointer'}} onClick={()=>{dispatch(Hide(!show.hide))}}> compte</span></div>
                     <button onClick={Validation}> {show.hide?'create accunte':'sign in'}</button>
                 </div>
             </div>
