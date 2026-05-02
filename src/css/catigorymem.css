@@ -1,0 +1,90 @@
+/* ===== CategoryMem.css ===== */
+
+.category-mem {
+    margin-top: 32px;
+    padding: 24px 28px;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.category-mem-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #173f42;
+    margin: 0 0 18px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(58, 171, 109, 0.2);
+}
+
+.category-mem-list {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.category-mem-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid #f0f0f0;
+    background: #fafafa;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    width: calc(50% - 7px);
+}
+
+.category-mem-card:hover {
+    border-color: #3aab6d;
+    background: rgba(58, 171, 109, 0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(58, 171, 109, 0.15);
+}
+
+.category-mem-img {
+    width: 44px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.category-mem-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow: hidden;
+}
+
+.category-mem-name {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.category-mem-cat {
+    font-size: 0.75rem;
+    color: #3aab6d;
+    background: rgba(58, 171, 109, 0.1);
+    padding: 2px 8px;
+    border-radius: 20px;
+    align-self: flex-start;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .category-mem {
+        padding: 18px 16px;
+    }
+
+    .category-mem-card {
+        width: 100%;
+    }
+}

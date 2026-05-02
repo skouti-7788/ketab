@@ -1,0 +1,168 @@
+/* Container الرئيسي */
+.checkout-container {
+    display: flex;
+    max-width: 90%;
+    margin: 50px auto;
+    gap: 40px;
+    padding: 20px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #1f2937;
+    background-color: #f9fafb;
+    border-radius: 16px;
+}
+
+/* زر الرجوع */
+.checkout-container p:first-child {
+    cursor: pointer;
+    color: #6b7280;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+    position: absolute;
+    top: 20px;
+}
+
+.checkout-container p:first-child:hover {
+    color: #2563eb;
+}
+
+/* الجزء الخاص بـ Form */
+.payment-form-section {
+    flex: 1.5;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* شعارات البنوك */
+.bank-badges {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.bank-badges img {
+    height: 25px;
+    filter: grayscale(20%);
+    opacity: 0.8;
+}
+
+/* تنسيق الحقول (Inputs) */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #374151;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.2s;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Grid ديال Expiry و CVV */
+.card-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* زر الأداء */
+.pay-button {
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-top: 10px;
+}
+
+.pay-button:hover {
+    background-color: #1d4ed8;
+}
+
+.pay-button:active {
+    transform: scale(0.98);
+}
+
+/* جزء ملخص الطلب (Summary) */
+.order-summary {
+    flex: 1;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    height: fit-content;
+    border: 1px solid #e5e7eb;
+}
+
+.order-summary h3 {
+    font-size: 18px;
+    color: #111827;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 15px;
+}
+
+/* Responsive (Mobile) */
+@media (max-width: 768px) {
+    .checkout-container {
+        flex-direction: column;
+        margin: 10px;
+        padding: 10px;
+    }
+    
+    .payment-form-section {
+        padding: 20px;
+    }
+}
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #4b5563; /* رمادي غامق احترافي */
+    background-color: #f3f4f6; /* خلفية خفيفة */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid rgb(167, 214, 167);
+    margin-bottom: 20px;
+    width: 70px;
+    height: 30px;
+}
+
+.back-button:hover {
+    background-color: #e5e7eb;
+    color: #1f2937;
+    /* transform: translateX(-4px);  */
+}
+
+/* إضافة سهم صغير قبل الكلمة يعطي لمسة جمالية */
+.back-button::before {
+    content: '';
+    margin-right: 5px;
+}

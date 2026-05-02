@@ -38,6 +38,8 @@ function App() {
             <Route path='/history' element={<History/>}/>
             <Route path='/notifications' element={<Notifications/>}/>
             <Route path='/account' element={<Account/>}/>
+
+           
           </Routes>
           
           <Footer/>
@@ -47,7 +49,7 @@ function App() {
         <Rate/> 
         <Share/>
         <Loguser/>
-        <ProfileCard/>
+        {/* <ProfileCard/> */}
        
     </BrowserRouter>
     

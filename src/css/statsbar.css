@@ -1,0 +1,110 @@
+/* ===== StatsBar.css (Compatible Version) ===== */
+
+/* 1. Dik partie dyal variables, ghadi tbeddelhom 7assab Home Page dyalk */
+:root {
+  /* Lowon l'ar9am (L'akhdar dyal code l9dim) */
+  --stats-accent-color: #83f0b4; 
+  
+  /* Lowon l-khit (Separator) */
+  --stats-separator-color: rgba(35, 214, 118, 0.25);
+  
+  /* Lowon l-kotob (Labels) - Khayr hua abyad */
+  --stats-text-color: rgba(34, 25, 25, 0.7);
+  
+  /* Font dyal l-ar9am (Serif) */
+  --stats-number-font: 'Georgia', serif; 
+  
+  /* Font dyal les labels (Sans-serif) */
+  --stats-label-font: inherit; /* "inherit" y3ni ykhod font dyal page kamla */
+}
+
+.stats-bar {
+  /* Background: Transparent bach ychof l-background dyal page dyalk */
+  background: transparent; 
+  padding: 40px 0; /* Chwiya space f la83 w lfou9 */
+  display: flex;
+  justify-content: center; /* Centrer l-bout */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  /* Ila bghiti tkhwi mn container m3ayen, zid "max-width: 1200px;" hna */
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 40px; /* N9ass l-padding chwiya */
+  position: relative;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: statFadeUp 0.6s ease forwards;
+}
+
+/* Separator (L-khit) */
+.stat-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 40px;
+  background: var(--stats-separator-color); /* Use variable */
+}
+
+.stat-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: var(--stats-text-color); /* Ywli mtb9in l-design */
+}
+
+.stat-number {
+  font-family: var(--stats-number-font);
+  font-size: 2.2rem;
+  color: var(--stats-accent-color); /* Lowon l-asasi */
+  line-height: 1;
+  letter-spacing: -0.5px;
+  font-weight: bold;
+}
+
+.stat-label {
+  font-family: var(--stats-label-font);
+  font-size: 0.85rem; /* Kbrihom chwiya bach yakhlso m3a Home */
+  color: var(--stats-text-color);
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+/* Animation */
+@keyframes statFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Responsive (Mobile) ── */
+@media (max-width: 768px) {
+  .stats-bar {
+    padding: 30px 20px;
+    gap: 30px; /* Zid l'espace f mobile */
+  }
+
+  .stat-item {
+    padding: 0 10px;
+    flex: 1 1 40%; /* 2 items par ligne */
+    min-width: 140px;
+  }
+
+  /* Maskh l-khit f mobile */
+  .stat-item:not(:last-child)::after {
+    display: none;
+  }
+  
+  .stat-number {
+      font-size: 1.8rem; /* S9r l-ar9am f mobile */
+  }
+}

@@ -1,98 +1,219 @@
-.cards-f{
-    margin-top:100px;
-}
-.cards{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    /* width: 96%; */
-   
-}
-.cards-f h3{
-    margin:  0 0 10px 20px;
-    /* padding-top: 100px; */
+/* ===== cards.css ===== */
 
+.cards-f {
+    max-width: 1200px;
+    margin: 60px auto 0;
+    padding: 0 20px;
 }
-/* .cards-f h4{
-    text-align: end;
-    margin-top: 20px;
-    cursor: pointer;
-    color: rgb(87, 163, 87);
-} */
-.cards-h{
-    width: 97%;
-    border: solid rgb(204, 223, 197) 1px;
-    background: rgb(231, 252, 230);
-    margin: 0 0 50px 20px;
-    padding: 20px;
+
+/* --- Section Block --- */
+.cards-h {
+    width: 100%;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #f0f0f0;
+    padding: 28px;
+    margin-bottom: 50px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.3s ease;
 }
+
+.cards-h:hover {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.cards-h h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #173f42;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f5f5f5;
+}
+
+/* --- Cards Grid --- */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+}
+
+.cards .empty-msg {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+    font-size: 0.95rem;
+}
+
+/* --- Single Card --- */
 .cards .card {
-    width: 230px;
-    height: 340px;
-    margin-top: 20px;
     position: relative;
-
-}
-.cards .card img{
-    width: 230px;
-    height: 340px;
-    border-radius: 5px;
-    /* width: 200px;
-    height: 250px; */
-    
-    
-}
-.cards .card::before{
-    content:'';
-    background: rgba(0, 0, 0, 0.5);
-    width: 230px;
-    height: 340px;
-    border-radius: 5px;
-    position: absolute;
-    inset: 0; 
-    opacity: 0;
-    transition:  0.3s;
-    /* cursor: pointer; */
-}
-.cards .card h3,h4{
-    height: 30px;
-}
-.cards .card .detail{
-    position: absolute;
-    top: 45%;
-    left: 30%;
-    width: 80px;
-    height: 44px;
-    background: rgb(102, 188, 197);
-    border: none;
-    border-radius: 20px;
-    
-    box-shadow:0 0 30px rgb(19, 193, 212);
-    transition:  1s;
-    opacity:0;
+    border-radius: 12px;
+    overflow: hidden;
     cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s ease;
+    background: #fafafa;
+    aspect-ratio: 3 / 4.2;
 }
-.cards .card:hover .detail,
-.cards .card:hover::before{
+
+.cards .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    
+}
+
+.cards .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.cards .card:hover img {
+    transform: scale(1.05);
+}
+
+/* --- Overlay --- */
+.cards .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.75) 0%,
+        rgba(0, 0, 0, 0.2) 40%,
+        transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    border-radius: 12px;
+    
+}
+
+.cards .card:hover::before {
     opacity: 1;
 }
-.Next-Back{
-    font-size: 30px;
-    margin: 20px  ;
-    display: flex;
-    justify-content: end;
-    gap:6%;
-    cursor: pointer;
-   
-}
-.Next-Back h4{
-    padding: 5px;
-    height: 40px;
-    background: rgb(87, 163, 87);
 
+/* --- Detail Button --- */
+.cards .card .detail {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    padding: 10px 28px;
+    background: rgb(157, 228, 157);
+    color: #173f42;
+    border: none;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(157, 228, 157, 0.35);
+    white-space: nowrap;
+    z-index: 2;
 }
-.Next-Back h4:hover{
-    background: rgb(87, 163, 87);
-    border-radius: 10px;
-    color: white;
+
+.cards .card:hover .detail {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.cards .card .detail:hover {
+    background: rgb(130, 210, 130);
+    box-shadow: 0 6px 20px rgba(157, 228, 157, 0.5);
+}
+
+/* --- Card Text (h3, h4 inside card) --- */
+.cards .card h3,
+.cards .card h4 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 14px;
+    margin: 0;
+    font-size: 0.85rem;
+    color: #fff;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* --- Pagination (Next / Back) --- */
+.Next-Back {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.Next-Back button {
+    padding: 8px 24px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #555;
+    background: #f7f7f7;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.Next-Back button:hover {
+    background: rgb(157, 228, 157);
+    color: #173f42;
+    border-color: rgb(157, 228, 157);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(157, 228, 157, 0.25);
+}
+
+.Next-Back button:active {
+    transform: translateY(0);
+}
+
+/* --- Empty State --- */
+.loading {
+    text-align: center;
+    padding: 80px 20px;
+    color: #aaa;
+    font-size: 1.05rem;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .cards-f {
+        margin-top: 30px;
+    }
+
+    .cards-h {
+        padding: 20px 16px;
+        border-radius: 12px;
+        margin-bottom: 36px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 14px;
+    }
+
+    .cards .card .detail {
+        padding: 8px 18px;
+        font-size: 0.78rem;
+        bottom: 20px;
+    }
+
+    .Next-Back {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
 }

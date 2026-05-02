@@ -1,11 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {opinions} from '../data/database'
 import { clear } from "@testing-library/user-event/dist/clear";
 const detailescardSlice = createSlice({
     name:'detailescard',
     initialState:{
         showrate:false,
-        opinions:opinions,
+        opinions:[],
         rate:0,
         isRate:0,
         favorie:0,
@@ -13,7 +12,8 @@ const detailescardSlice = createSlice({
         showopinion:false,
         showshare:null,
         emprunter:null,
-        isShowLivre:null
+        isShowLivre:null,
+        isOpinion:'',
 
 
     },
@@ -32,9 +32,13 @@ const detailescardSlice = createSlice({
             clearIsShowLivre:(state)=>{state.isShowLivre = null},
             setShowShare:(state,action)=>{state.showshare = action.payload},
             setEmprunter:(state,action)=>{state.emprunter = action.payload},
+            setOpinion:(state,action)=>{state.opinions = action.payload},
+            setIsOpinion:(state,action)=>{state.isOpinion = action.payload},
+            clearIsOpinion:(state)=>{state.isOpinion = ''},
 
     }
 })
 export const {setShowrate,setIsRate,setRate,setShowFavorite,setShowOpinion,setShowShare,setEmprunter,
-             setFavorite,clearRate,clearIsRate,setIsShowLivre,clearIsShowLivre} = detailescardSlice.actions;
+             setFavorite,clearRate,clearIsRate,setIsShowLivre,clearIsShowLivre,setOpinion,clearIsOpinion
+            ,setIsOpinion} = detailescardSlice.actions;
 export default detailescardSlice.reducer;

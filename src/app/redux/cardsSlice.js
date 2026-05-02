@@ -23,7 +23,7 @@ const cardsSlice = createSlice({
             setLivres:(state,action)=>{state.cards = action.payload;state.livres = action.payload},
             Filter:(state,action) =>{state.cards = state.livres.filter((b)=> b.category === action.payload); state.onecat = action.payload},
             AllBooks:(state) => {state.cards = state.livres},
-            SearshBar:(state,action)=> {state.cards = state.livres.filter((b)=> b.title.toLowerCase().includes(action.payload.toLowerCase())); state.search = action.payload},
+            SearshBar:(state,action)=> {state.cards = state.livres.filter((b)=> b.title.toLowerCase().includes(action.payload.toLowerCase()) || b.author.toLowerCase().includes(action.payload.toLowerCase())  ); state.search = action.payload},
 
     //         setOneCard:(state,action)=> {state.OneCard = action.payload },
             setHide:(state,action)=> {state.hide = action.payload },

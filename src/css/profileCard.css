@@ -1,27 +1,134 @@
+/* ===== profileCard.css ===== */
 
-.profile-card{
-    background: rgb(177, 243, 177);
-    width: 20%;
-    height: fit-content;
+.profile-overlay {
     position: fixed;
-    top: 10%;
-    left: 75%;
-    border-radius: 10px 0 10px 10px  ;
+    inset: 0;
+    z-index: 998;
+    background: transparent;
 }
-.profile-info ul li{
-    list-style: none;
-    cursor: pointer;
-    height: 50px;
-    padding-top: 10px;
-    padding-left: 5px;
-    border-radius: 10px 0  0 10px ;
-}
-.profile-info ul li:hover{
-    background: rgb(140, 201, 140);
 
+.profile-card {
+    position: fixed;
+    top: 72px; 
+    right: 30px;
+    width: 280px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    z-index: 999;
+    padding: 12px;
+    animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: top right;
+    display: flex;
+    justify-content: space-around;
 }
-.profile-info ul li select{
-    border-radius: 5px;
-    border:none;
-    background: rgb(177, 243, 177);
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+} */
+
+/* --- Close Button --- */
+.profile-close {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+    padding: 0 4px;
+}
+
+.profile-close button {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #888;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+}
+
+.profile-close button:hover {
+    background: #eee;
+    color: #333;
+}
+
+/* --- Menu List --- */
+.profile-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profile-info .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 44px;
+    padding: 0 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #444;
+    transition: all 0.2s ease;
+}
+
+.profile-info .item:hover {
+    background: rgba(157, 228, 157, 0.12);
+    color: #173f42;
+}
+
+/* --- Settings Section --- */
+.profile-settings {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #f5f5f5;
+}
+
+.profile-settings .item {
+    cursor: default;
+    font-size: 0.85rem;
+    color: #777;
+    height: 40px;
+}
+
+.profile-settings label {
+    font-weight: 500;
+}
+
+.profile-settings select {
+    margin-left: 12px;
+    padding: 4px 8px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    background: #f9f9f9;
+    color: #555;
+    font-size: 0.82rem;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.profile-settings select:focus {
+    border-color: rgb(157, 228, 157);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .profile-card {
+        right: 10px;
+        left: 10px;
+        width: auto;
+    }
 }

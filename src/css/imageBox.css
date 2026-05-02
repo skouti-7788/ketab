@@ -1,77 +1,165 @@
+/* ===== imageBox.css ===== */
 .image-bg {
     position: relative;
-    height: fit-content;
-    margin: 40px 20px 0;
+    margin: 40px 0 0;
     overflow: hidden;
+    min-height: 520px;
 }
 
 .image-bg::before {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: -20px;
     background: url('../images/image-books.webp') center/cover no-repeat;
-    filter: blur(2px);
-    transform: scale(1.1);  
+    filter: blur(4px) brightness(0.6); /* Image souda chwia bach l carte tkhraj */
+    transform: scale(1.1);
     z-index: 0;
 }
 
-.image-box{
-    margin: 20px;
-     
-    background: rgba(174, 240, 183, 0.7);
-    height: fit-content;
-    padding: 10px 0;
+/* --- La Carte (Solid Opaque) --- */
+.image-box {
     position: relative;
     z-index: 1;
-    border-radius: 5px;
-    
+    max-width: 950px;
+    margin: 50px auto;
+    padding: 60px 50px 40px;
+    /* Raj3na l look opaque ms pro */
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(157, 228, 157, 0.2);
 }
-.cont-searsh{
+
+/* --- Search Section --- */
+.cont-searsh {
     text-align: center;
-    margin: 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    font-size: 25px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 36px;
 }
-.image-box h3,.h4{
-    margin-left:4% ;
-    color: #173f42;
-}
-.image-box input{
-    width: 50%;
-    margin-left: 25%;
-    height: 20px;
-    border-radius: 20px;
-    outline: none;
-    border: none;
-    padding: 20px;
-    font-size: 20px;
-}
-.image-bg .cont-books{
-    /* background: rgba(255, 255, 255, 0.5); */
-    width: 97%;
-    padding: 20px;
-    margin-left: 20px;
-    margin-top: 100px;
-    /* box-shadow: 0 -1px 3px gray; */
-}
-.image-bg .cont-books ul{
-    height: fit-content;
-    display:flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-.image-bg .cont-books ul li{
-    margin-top: 10px;
-    list-style: none;
-    cursor: pointer;
-    padding: 15px;
-    border: rgb(255, 255, 255) solid 1px;
-     
 
+.cont-searsh h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #173f42; /* Raj3na loun asli */
+    letter-spacing: -0.5px;
+    margin: 0;
 }
-.image-bg .cont-books ul li:hover{
-    background: rgb(140, 207, 145);
-    border-radius: 10px;
+
+.cont-searsh .h4 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #666;
+    margin: 0;
+}
+
+.cont-searsh input {
+    width: 100%;
+    max-width: 520px;
+    height: 52px;
+    /* Input solid khdam */
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 50px;
+    outline: none;
+    padding: 0 24px;
+    font-size: 1rem;
+    color: #1a1a1a;
+    transition: all 0.3s ease;
+    margin-top: 12px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.cont-searsh input::placeholder {
+    color: #aaa;
+}
+
+.cont-searsh input:focus {
+    border-color: rgb(157, 228, 157);
+    box-shadow: 0 0 0 4px rgba(157, 228, 157, 0.15);
+}
+
+/* --- Categories Section --- */
+.cont-books {
+    margin-top: 10px;
+    padding-top: 28px;
+    border-top: 1px solid #f0f0f0; /* Fassel s7i7 */
+}
+
+.cont-books h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #173f42; /* Loun asli */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 16px;
+}
+
+.cont-books ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.cont-books ul li {
+    padding: 10px 20px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #173f42; /* Loun asli */
+    background: #f7fdf8; /* Khadhra khfifa bdla blanc */
+    border: 1px solid rgba(157, 228, 157, 0.3);
+    border-radius: 50px; /* Dkhlna pills ghir bach ykunu modern */
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+    list-style: none;
+}
+
+.cont-books ul li:hover {
+    background: rgb(140, 207, 145); /* Raj3na loun hover asli */
+    border-color: rgb(140, 207, 145);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(140, 207, 145, 0.3);
+}
+
+.cont-books ul li:active {
+    transform: translateY(0);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .image-bg {
+        min-height: auto;
+    }
+
+    .image-box {
+        margin: 20px 12px;
+        padding: 32px 20px 28px;
+        border-radius: 16px;
+    }
+
+    .cont-searsh h3 {
+        font-size: 1.5rem;
+    }
+
+    .cont-searsh input {
+        height: 46px;
+        font-size: 0.9rem;
+    }
+
+    .cont-books ul {
+        gap: 8px;
+    }
+
+    .cont-books ul li {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+    }
 }

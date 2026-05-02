@@ -13,7 +13,8 @@ const logSlice = createSlice({
       passwordErr:null,
       confPassword:null,
       close:null,
-       
+      notification:null
+      
     },
     reducers:{
             Show:(state,action)=>{state.show = action.payload},
@@ -28,7 +29,8 @@ const logSlice = createSlice({
         setpasswordErr:(state,action)=>{ state.passwordErr = action.payload  },
         setconfPassword:(state,action)=>{ state.confPassword = action.payload  },
         clearMessageErr:(state)=>{ state.emailErr = null ; state.passwordErr = null ;state.confPassword = null},
-        setClose:(state,action)=>{ state.close = action.payload}
+        setClose:(state,action)=>{ state.close = action.payload},
+        setNotification:(state,action)=>{ state.notification = action.payload}
 
 
 
@@ -37,5 +39,5 @@ const logSlice = createSlice({
 })
 export const {Show,Hide,setUsers,addUser,setVerUser,setOk,clearMessage,
              setMessage,setemailErr,setpasswordErr,setconfPassword,clearMessageErr,
-            setClose} = logSlice.actions;
+            setClose,setNotification} = logSlice.actions;
 export default logSlice.reducer;

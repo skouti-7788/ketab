@@ -1,37 +1,72 @@
-import '../css/share.css'; 
-import { setShowShare } from '../app/redux/detailescardSlice';
-// import {Show} from '../app/redux/logSlice'
-import { useDispatch, useSelector } from 'react-redux';
-export default function Opinion(){
-    const showshare = useSelector((state)=> state.detailescard.showshare);
+import '../css/share.css'  
+import { setShowShare } from '../app/redux/detailescardSlice'
+import { useDispatch, useSelector } from 'react-redux'
+
+export default function Share() {
+    const showshare = useSelector((state) => state.detailescard.showshare)
     const dispatch = useDispatch()
-    // const url = ''
-    return(
-        <>
-        {showshare&&<div className="share">
-            <p style={{textAlign:'end',paddingRight:'5px',fontSize:'20px',cursor:'pointer'}} onClick={()=>dispatch(setShowShare(false))}>x</p>
-            <ul>
-                <li>
-                    <a className="bi bi-whatsapp" href='https://api.whatsapp.com'  target="_blank" rel="noopener noreferrer"> partager sur WhatsApp
-                    </a>
-                </li>
 
-                <li>
-                    <a className="bi bi-facebook"href='https://www.facebook.com' target="_blank" rel="noopener noreferrer"> partager sur Facebook
-                    </a> 
-                </li>
+    // Récupérer l'URL actuelle pour la partager correctement
+    const currentUrl = encodeURIComponent(window.location.href)
 
-                <li> 
-                    <a className="bi bi-instagram"href='https://www.instagram.com' target="_blank" rel="noopener noreferrer"> partager sur Instagram</a> 
-                </li>
+    if (!showshare) return null
 
-                <li>
-                    <a className="bi bi-telegram"href='https://t.me' target="_blank" rel="noopener noreferrer"> partager sur Telegram
-                    </a> 
-                </li>
-             </ul>
-        </div>}
-        </>
-        
-    );
+    return (
+        <div className="share-overlay" onClick={() => dispatch(setShowShare(false))}>
+            <div className="share-modal" onClick={(e) => e.stopPropagation()}>
+                
+                <button className="share-close" onClick={() => dispatch(setShowShare(false))}>
+                    ✕
+                </button>
+
+                <h4 className="share-title">Partager ce livre</h4>
+
+                <ul className="share-links">
+                    <li>
+                        <a 
+                            className="share-link-item bi bi-whatsapp" 
+                            href={`https://api.whatsapp.com/send?text=Regarde ce livre incroyable : ${currentUrl}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            <span>Partager sur WhatsApp</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a 
+                            className="share-link-item bi bi-facebook" 
+                            href={`https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            <span>Partager sur Facebook</span>
+                        </a>
+                    </li>
+
+                    <li> 
+                        <a 
+                            className="share-link-item bi bi-instagram" 
+                            href="https://www.instagram.com" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            <span>Partager sur Instagram</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a 
+                            className="share-link-item bi bi-telegram" 
+                            href={`https://t.me/share/url?url=${currentUrl}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            <span>Partager sur Telegram</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    )
 }

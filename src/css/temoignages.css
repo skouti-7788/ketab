@@ -1,0 +1,81 @@
+:root {
+    --main-green: #3aab6d;
+}
+
+.testimonials-section {
+    padding: 80px 20px;
+    background: #f4f6f8;
+}
+
+.container-testimonials {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.test-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 50px;
+    color: #1a1a1a;
+}
+
+.test-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.test-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s;
+}
+
+.test-card:hover {
+    transform: translateY(-5px);
+}
+
+.test-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.stars {
+    color: #f1c40f;
+    font-size: 1.1rem;
+}
+
+.verified {
+    font-size: 0.75rem;
+    color: var(--main-green);
+    background: rgba(58, 171, 109, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.test-card p {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 15px;
+}
+
+.user-info strong { color: #333; }
+.user-info span { color: #999; font-size: 0.8rem; }

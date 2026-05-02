@@ -1,6 +1,6 @@
 import { useEffect} from "react";
 import { useDispatch} from "react-redux";
-import { setUsers ,addUser,setVerUser,setMessage} from "../redux/logSlice";
+import { setUsers ,addUser,setVerUser,setNotification,setMessage} from "../redux/logSlice";
 import api from '../../api/axios';
 // import {jwtDecode} from "jwt-decode";
 export  function useLog(){
@@ -27,19 +27,58 @@ export  function useLog(){
     
     useEffect(()=>{ },[]);
     const addUsers = async (users) => {
-    const res = await api.post(
-    "/register",{
-          username: users.username ?? "",
-          email: users.email ?? "",
-          password: users.password ?? "",
-          password_confirmation: users.password_confirmation ?? ""
+    try{
+      const res = await api.post(
+      "/register",{
+            username: users.username ?? "",
+            email: users.email ?? "",
+            password: users.password ?? "",
+            password_confirmation: users.password_confirmation ?? ""
+      }
+      );
+      
+      console.log(res.data)
+      // dispatch(addUser(res.data)); 
+      dispatch(setMessage(res.data.message))
+      dispatch(setNotification(true))
+    }catch(err){
+      console.log(err)
     }
-    );
     
-    console.log(res.data)
-    // dispatch(addUser(res.data)); 
-    dispatch(setMessage(res.data.message))  };
+    try{
+       const res = api.post('/adherents',
+          {
+          nom:users.username,
+          email:  users.email,
+          phone: '--', 
+          datadahestion: new Date().toISOString().slice(0,10), 
+          status:'inactive',
+          // user_id:users.id,
 
+          }
+      )
+          console.log(res.data)
+    }catch(err){
+          console.log(err)
+    }
+  };
+  // const checkAdherents = async (users)=>{
+
+  // try{
+  //     console.log('users',users)
+  //      const res = await api.put(
+  //     `/adherents/${users.id}`,{
+  //         nom: users.username,
+  //         email: users.email,
+  //         phone: '--', 
+  //         datadahestion: new Date().toISOString().slice(0,10), 
+  //         status:'inactive',
+  //         user_id:users.id,
+
+  //     }
+  //     );
+  //   }catch(err){console.log(err)}
+  // }
   const verUser = async (user) => {
     // console.log(email,password)
      try {
@@ -48,22 +87,23 @@ export  function useLog(){
       );
       // console.log(res.data)
       if(res.data.user && res.data.token){
-       localStorage.setItem('token', JSON.stringify(res.data.token));
+       localStorage.setItem('token', res.data.token);
        localStorage.setItem('user', JSON.stringify(res.data.user));
       }
+      dispatch(setMessage(res.data.message))
       // const token = localStorage.getItem("token");
       // if(res.data.token){
       // const data = jwtDecode(res.data.token);
       // console.log(data);
       // }
-      console.log(res.data)
-      dispatch(setMessage(res.data.message))
+       
+       
       // return res.data; 
   } catch (err) {
     console.error(err.response?.data);
   }
    
   }; 
-  return {addUsers,verUser}
+  return { addUsers,verUser}
 }
 

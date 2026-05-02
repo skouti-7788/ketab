@@ -1,0 +1,97 @@
+/* auteurspopulaires.css */
+
+:root {
+    --main-green: #3aab6d; /* Vert Professionnel */
+    --dark-green: #2c8e5b;
+}
+
+.authors-section {
+    padding: 80px 20px;
+    background: #f4f7f6; /* Un gris très clair pour que les cartes blanches ressortent */
+}
+
+.container-authors {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.authors-title {
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    color: #1a1a1a;
+    text-align: center;
+    font-weight: 800;
+}
+
+.authors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+}
+
+.author-card {
+    /* --- STYLE DEMANDÉ --- */
+    background: #ffffff;            /* Fond Blanc */
+    /* border: 1px solid var(--main-green); Bordure Verte */
+    /* --------------------- */
+
+    padding: 40px 20px;
+    border-radius: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.author-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--dark-green); /* La bordure devient plus foncée au survol */
+    box-shadow: 0 15px 30px rgba(58, 171, 109, 0.2);
+}
+
+.author-img-container {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    padding: 3px; /* Espace entre l'image et la bordure */
+    /* border: 2px solid var(--main-green); Bordure verte autour de l'image */
+    overflow: hidden;
+}
+
+.author-img-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-card h3 {
+    margin: 0 0 5px;
+    font-size: 1.15rem;
+    color: #2d3748;
+    font-weight: 700;
+}
+
+.author-role {
+    color: #718096;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.btn-follow {
+    padding: 10px 28px;
+    border-radius: 50px;
+    border: none;
+    background: transparent;      /* Bouton transparent */
+    border: 1px solid var(--main-green); /* Bordure verte */
+    color: var(--main-green);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-follow:hover {
+    background: var(--main-green); /* Devient vert au survol */
+    color: white;
+}

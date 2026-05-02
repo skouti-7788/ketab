@@ -1,159 +1,212 @@
-import { useDispatch,useSelector } from "react-redux"
-import { Show,Hide,setOk,setVerUser,clearMessage,setemailErr,setpasswordErr
-    ,setconfPassword,clearMessageErr} from "../../app/redux/logSlice";
-import {setShowFavorite} from '../../app/redux/detailescardSlice';
-import { useState } from "react";
-import { useLog } from "../../app/data/logData";
+import { useDispatch, useSelector } from "react-redux"
+import { Show, Hide, setOk, clearMessage, setemailErr, setpasswordErr, setconfPassword, clearMessageErr } from "../../app/redux/logSlice"
+import { setShowFavorite } from '../../app/redux/detailescardSlice'
+import { useState, useEffect } from "react"
+import { useLog } from "../../app/data/logData"
 import '../../css/signIn.css'
-import { useEffect } from "react";
-export default function SignIn(){
-    const {addUsers,verUser} = useLog();
-    const [user,setUser] = useState(
-        {
-            username:'',
-            email:'',
-            password:'',
-            password_confirmation:'',
-        }) ;
+import api from "../../api/axios"
 
-    const [veruser,setVeruser] = useState(
-        {
-            email:'',
-            password:'', 
-        }) ;
-    const [messageErr,setMessageErr] = useState('')
-    const [vide,setVide] = useState('')
-    const show = useSelector((state)=> state.loguser);
-    // console.log(show) 
-    const dispatch = useDispatch();
+export default function SignIn() {
+    const { addUsers, verUser } = useLog()
+    const [user, setUser] = useState({
+        username: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+    })
+    const [veruser, setVeruser] = useState({
+        email: '',
+        password: '',
+    })
+    
+    // State bdl alert()
+    const [uiFeedback, setUiFeedback] = useState({ type: '', text: '' })
+
+    const show = useSelector((state) => state.loguser)
+    const dispatch = useDispatch()
+    
+    // show.hide = true y3ni Inscription
+    const isSignUp = show.hide
     
     useEffect(() => {
-        if(!show.message) return;
-        switch(show.message){
+        if (!show.message) return
+        
+        switch (show.message) {
             case "User existe deja":
-                alert("User existe deja");
-                // console.log("User existe deja")
-                dispatch(clearMessage());
-                dispatch(Hide(true));
-                break;
+                setUiFeedback({ type: 'error', text: "Cet email est déjà utilisé." })
+                dispatch(clearMessage())
+                dispatch(Hide(true))
+                break
             case "Utilisateur créé avec succès":
-                alert("Utilisateur créé avec succès");
-                // console.log("Utilisateur créé avec succès");
-                dispatch(clearMessage());
-                setUser({
-                    username:'',
-                    email:'',
-                    password:'',
-                    password_confirmation:'',
-                })
-                dispatch(Hide(false));
-                
-                break;
-            case "Login success" :
-                alert("Login success");
-                // console.log("Login success")
-                dispatch(Show(false));
-                dispatch(setOk(true));
-                dispatch(clearMessage());
-                localStorage.setItem("ok", true);
-                setVeruser({
-                    email:'',
-                    password:'',
-                })
+                setUiFeedback({ type: 'success', text: "Compte créé avec succès ! Connectez-vous." })
+                dispatch(clearMessage())
+                setUser({ username: '', email: '', password: '', password_confirmation: '' })
+                dispatch(Hide(false)) // Switch vers Sign In
+                break
+            case "Login success":
+                setUiFeedback({ type: 'success', text: "Connexion réussie !" })
+                dispatch(Show(false))
+                dispatch(setOk(true))
+                dispatch(clearMessage())
+                localStorage.setItem("ok", true)
+                setVeruser({ email: '', password: '' })
                 dispatch(clearMessageErr())
-                setMessageErr('')
-                break;
+                break
             case "User not found":
-                alert("User not found");
-                // console.log("User not found")
-                dispatch(clearMessage());
-                break;
-            case 'Password incorrect':
-                  setMessageErr('Password incorrect')
-                break;
-            case  'Les champs sont vides':
-                setVide('Les champs sont vides');
-                break;
+                setUiFeedback({ type: 'error', text: "Aucun compte trouvé avec cet email." })
+                dispatch(clearMessage())
+                break
+            case "Password incorrect":
+                setUiFeedback({ type: 'error', text: "Mot de passe incorrect." })
+                dispatch(clearMessage())
+                break
+            case "Les champs sont vides":
+                setUiFeedback({ type: 'error', text: "Veuillez remplir tous les champs." })
+                dispatch(clearMessage())
+                break
+        
             default:
-                dispatch(clearMessage());
-               
+                dispatch(clearMessage())
+        }
+    }, [show.message, dispatch])
 
-        }
-    }, [show.message]); 
-    const Validation =  ()=>{
-        const isEmpty = Object.values(show.hide?user:veruser).every(v => v.trim() !== '') ;
-        if(!isEmpty){
-            dispatch(clearMessageErr())
-            setVide('Les champs sont vides');
-            return;
-        }   
-        if(isEmpty){
-            setVide('')
-        const valEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(show.hide?user.email:veruser.email);
-        if(!valEmail){
-            dispatch(setemailErr('email incorrect'))
-        }
-        const valPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(show.hide?user.password:veruser.password)
-        if(!valPassword){
-            dispatch(setpasswordErr('password incorrect'))
-        }
-        if(user.password !== user.password_confirmation){
-            dispatch(setconfPassword('password confirmation incorrect'))
-        }
-        if(show.hide&& valEmail&&valPassword&&user.password === user.password_confirmation){
-            addUsers(user);
-            // dispatch(Show(true));
-               
-            dispatch(clearMessageErr())
-        } 
-      
-        if(valPassword){
-            dispatch(setpasswordErr(''))
+    const Validation = () => {
+        const currentData = isSignUp ? user : veruser
+        
+        const isEmpty = Object.values(currentData).some(v => v.trim() === '')
+
+        if (isEmpty) {
+            setUiFeedback({ type: 'error', text: 'Veuillez remplir tous les champs.' })
+            return
         }
 
-        if(valEmail){
-              dispatch(setemailErr(''))
+        setUiFeedback({ type: '', text: '' })
+        dispatch(clearMessageErr())
+
+        const valEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(currentData.email)
+        if (!valEmail) {
+            dispatch(setemailErr('Format email invalide'))
+            return
+        }
+        dispatch(setemailErr(''))
+
+        const valPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(currentData.password)
+        if (!valPassword) {
+            dispatch(setpasswordErr('Min 8 lettres, majuscule, minuscule, chiffre et symbole'))
+            return
+        }
+        dispatch(setpasswordErr(''))
+
+        if (isSignUp) {
+            if (user.password !== user.password_confirmation) {
+                dispatch(setconfPassword('Les mots de passe ne correspondent pas'))
+                return
             }
-        if(!show.hide&&valPassword&& valEmail){ 
-            // console.log(!show.hide,valPassword,valEmail)
-           verUser(veruser);
-           dispatch(clearMessageErr())
+            dispatch(setconfPassword(''))
+            addUsers(user)
+
+        } else {
+            verUser(veruser)
         }
     }
+
+    const handleClose = () => {
+        dispatch(Show(false))
+        dispatch(setShowFavorite(false))
+        setUiFeedback({ type: '', text: '' })
+        dispatch(clearMessageErr())
     }
-   
-    return(
-    <>
-        {show.show&&<div className="sign">
-            <div>
-                <span onClick={()=>{dispatch(Show(false));dispatch(setShowFavorite(false))}}>x</span>
-                <h3 style={{textAlign:'center'}}>inscription</h3>
-                <div className="form">
-                    {show.hide&&  
-                    <><label>username </label>
-                    <input value={user.username} type='text' onChange={(e)=>setUser({...user,username:e.target.value})}/></>}
 
-                    <label>email:</label>
-                    <input value={show.hide?user.email:veruser.email} onChange={(e)=>show.hide?setUser({...user,email:e.target.value}):setVeruser({...veruser,email:e.target.value})} type='email'/>
-                    {show.emailErr&&<span style={{color:'red',fontSize:'14px'}}>{show.emailErr}</span>}
+    return (
+        <>
+            {show.show && (
+                <div className="sign-overlay" onClick={handleClose}>
+                    <div className="sign-modal" onClick={(e) => e.stopPropagation()}>
+                        
+                        <button className="sign-close" onClick={handleClose}>✕</button>
+                        
+                        <h3 className="sign-title">
+                            {isSignUp ? 'Créer un compte' : 'Se connecter'}
+                        </h3>
 
-                    <label style={{marginTop:'-5px'}}>password:</label>
-                    <input value={show.hide?user.password:veruser.password} onChange={(e)=>show.hide?setUser({...user,password:e.target.value}):setVeruser({...veruser,password:e.target.value})} type='password'/>
-                    {show.passwordErr&&<span style={{color:'red',fontSize:'14px'}}>{show.passwordErr}</span>}
-                    <span style={{color:'red',fontSize:'14px'}}>{messageErr } </span>
+                        {uiFeedback.text && (
+                            <div className={`sign-feedback ${uiFeedback.type}`}>
+                                {uiFeedback.text}
+                            </div>
+                        )}
 
-                    {show.hide&&<>
-                    <label style={{marginTop:'-10px'}}>confirme passsword:</label>
-                    <input value={user.password_confirmation} onChange={(e)=>setUser({...user,password_confirmation:e.target.value})} type='password'/></>}
-                    {show.hide&&show.confPassword&&<span style={{color:'red',fontSize:'14px'}}>{show.confPassword}</span>}
-                    {vide&&<span style={{color:'red',fontSize:'14px'}}>{vide}</span>}
-                    <div style={{marginTop:'-2px'}}>{show.hide?'J\'ai un':'Je n\'ai pas de '}<span style={{color:'blue',cursor:'pointer'}} onClick={()=>{dispatch(Hide(!show.hide))}}> compte</span></div>
-                    <button onClick={Validation}> {show.hide?'create accunte':'sign in'}</button>
+                        <div className="sign-form">
+                            {isSignUp && (
+                                <div className="input-group">
+                                    <label>Nom d'utilisateur</label>
+                                    <input 
+                                        type='text' 
+                                        placeholder="John Doe"
+                                        value={user.username} 
+                                        onChange={(e) => setUser({...user, username: e.target.value})} 
+                                    />
+                                </div>
+                            )}
+
+                            <div className="input-group">
+                                <label>Email</label>
+                                <input 
+                                    type='email' 
+                                    placeholder="exemple@email.com"
+                                    value={isSignUp ? user.email : veruser.email} 
+                                    onChange={(e) => isSignUp 
+                                        ? setUser({...user, email: e.target.value}) 
+                                        : setVeruser({...veruser, email: e.target.value})
+                                    } 
+                                />
+                                {show.emailErr && <span className="error-text">{show.emailErr}</span>}
+                            </div>
+
+                            <div className="input-group">
+                                <label>Mot de passe</label>
+                                <input 
+                                    type='password' 
+                                    placeholder="••••••••"
+                                    value={isSignUp ? user.password : veruser.password} 
+                                    onChange={(e) => isSignUp 
+                                        ? setUser({...user, password: e.target.value}) 
+                                        : setVeruser({...veruser, password: e.target.value})
+                                    } 
+                                />
+                                {show.passwordErr && <span className="error-text">{show.passwordErr}</span>}
+                            </div>
+
+                            {isSignUp && (
+                                <div className="input-group">
+                                    <label>Confirmer le mot de passe</label>
+                                    <input 
+                                        type='password' 
+                                        placeholder="••••••••"
+                                        value={user.password_confirmation} 
+                                        onChange={(e) => setUser({...user, password_confirmation: e.target.value})} 
+                                    />
+                                    {show.confPassword && <span className="error-text">{show.confPassword}</span>}
+                                </div>
+                            )}
+
+                            <button className="sign-btn" onClick={Validation}>
+                                {isSignUp ? "Créer mon compte" : "Se connecter"}
+                            </button>
+
+                            <p className="sign-switch">
+                                {isSignUp ? 'Déjà un compte ?' : 'Pas de compte ?'}
+                                <span onClick={() => { 
+                                    dispatch(Hide(!isSignUp)); 
+                                    dispatch(clearMessageErr()); 
+                                    setUiFeedback({ type: '', text: '' }) 
+                                }}>
+                                    {isSignUp ? ' Se connecter' : " S'inscrire"}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-        </div>}
-    </>
-    
-    );
+            )}
+        </>
+    )
 }

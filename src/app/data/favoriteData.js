@@ -13,6 +13,7 @@ export  function useFavorite(){
                 const res = await axios.get("/favorite")
                 dispatch(setFavorites(res.data.favorites));
                 // setIsFavorite(res.data.favorites)
+                // console.log(res.data.favorites)
     }
     const checkFavorite = useCallback( async (user,id) => {
             

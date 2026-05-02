@@ -1,0 +1,27 @@
+.cards-h ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cards-h ul li {
+    
+    font-size: 1rem;
+    color: #444;
+    padding: 6px 0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.cards-h ul li:last-child {
+    border-bottom: none;
+}
+
+.cards-h ul li:hover {
+    color: #58997b;
+}
+
