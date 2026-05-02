@@ -9,12 +9,13 @@ import { useState } from 'react'
 import Reader from './lireLivre';
 import PaymentPage from './paymentPage'
 import { useNavigate } from 'react-router'
-export default function AchCard({is_free=true,book,
+import useTelecharger from '../../app/data/telechargerData'
+export default function AchCard({is_free=true,book,bookId,
     stats = { lire: 0, telecharger: 0, emprunter: 0, acheter: 0 },
     setShowPaye,
      file_url= "https://docs.google.com/gview?embedded=true&url=https://www.africau.edu/images/default/sample.pdf"}) {
     useBook()
-
+    const {telechargerBook} = useTelecharger()
     const ok = useSelector((state) => state.loguser.ok)
     const dispatch = useDispatch()
 
@@ -56,8 +57,11 @@ export default function AchCard({is_free=true,book,
     // axios.post('/achat', data)
 
     setShowBuy(false)
-}
- 
+   }
+    const handleTelech = () =>{
+    telechargerBook(bookId)
+    }
+    
 const methods = [
   {
     id: "pdf",
@@ -96,7 +100,7 @@ const methods = [
                 </div>
 
                 <div className='btn-wrapper'>
-                    <button className='btn-download'>Télécharger</button>
+                    <button className='btn-download' onClick={handleTelech}>Télécharger</button>
                     <span className='btn-stat'>{stats.telecharger} téléchargements</span>
                 </div>
 

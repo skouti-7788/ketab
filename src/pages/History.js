@@ -4,17 +4,23 @@ import useLivres from "../app/data/database";
 import BookCard from "../components/home/bookcard";
 import '../css/history.css'
 import axios from "../api/axios";
+import useTelecharger from "../app/data/telechargerData";
 export default function History(){
     const [userEmprunts,setUserEmprunts] = useState([])
-    const [showHostoy,setShowHostoy] = useState('')
     const { lireShow ,fetchShowlivres } = useShowlivres();
+    const { telechar,fetchTelecharger } = useTelecharger()
     const {livres} = useLivres() 
     const ok = JSON.parse(localStorage.getItem('ok')) || null
     const iduser =  ok?JSON.parse(localStorage.getItem('user')).id:null
+
     const idlireShow =  lireShow.map((show)=> show.user_id === iduser?show.livre_id:false)
     const idlireShowBooks = livres.filter((livre) => idlireShow.includes(livre.id));
+
     const newemprunt = userEmprunts.map((emprunt)=> emprunt.adherent_id === iduser?emprunt.livre_id:false) 
     const idnewemprunt = livres.filter((livre) => newemprunt.includes(livre.id));
+
+    const newtelechar = telechar.map((telech)=> telech.user_id === iduser?telech.livre_id:false)
+    const idtelechargements = livres.filter((livre) => newtelechar.includes(livre.id));
     useEffect(()=>{
         fetchShowlivres()
     },[])
@@ -30,7 +36,9 @@ export default function History(){
         }
         fetchEmprunts()
     },[])
-    const idtelechargements = []
+    useEffect(()=>{
+        fetchTelecharger()
+    },[])
     const idachats =  []
     const [newnhostoy,setNewnhostoy] = useState([...idlireShowBooks])
     const  history = [

@@ -171,7 +171,7 @@ export default function DetailesCard() {
                 <p>{descriptions}</p>
             </div>
 
-            <AchCard setShowPaye={setShowPaye} is_free={oneCard.is_free}  book={oneCard.title} ile_url={oneCard.ile_url} />
+            <AchCard setShowPaye={setShowPaye} is_free={oneCard.is_free} bookId={oneCard.id}  book={oneCard.title} ile_url={oneCard.ile_url} />
             <CategoryMem  oneCard={oneCard} allLivres={cards.livres}/>
             {opinions?.length > 0&&
              (
