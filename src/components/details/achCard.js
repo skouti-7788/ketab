@@ -13,7 +13,9 @@ import useTelecharger from '../../app/data/telechargerData'
 export default function AchCard({is_free=true,book,bookId,
     stats = { lire: 0, telecharger: 0, emprunter: 0, acheter: 0 },
     setShowPaye,
-     file_url= "https://docs.google.com/gview?embedded=true&url=https://www.africau.edu/images/default/sample.pdf"}) {
+     file_url}) {
+         
+
     useBook()
     const {telechargerBook} = useTelecharger()
     const ok = useSelector((state) => state.loguser.ok)

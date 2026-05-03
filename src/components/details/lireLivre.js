@@ -1,38 +1,49 @@
 import { useSelector, useDispatch } from "react-redux"
 import { setLire } from "../../app/redux/profileSlice"
 import '../../css/lirelivres.css'
-export default function Reader({title,file_url}) {
+import { useState, useEffect } from "react"
+
+export default function Reader({ title, file_url }) {
     const dispatch = useDispatch()
-
     const showLire = useSelector((state) => state.profile.lire)
-    // const book = useSelector((state) => state.books.currentBook)
-    // console.log('lirelivres',showLire)
 
-    if (!showLire) return null
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (showLire) {
+            setLoading(true);  
+        }
+    }, [showLire]);
+
+    if (!showLire) return null;
 
     return (
-        <>
-            {showLire&&<div className="reader-overlay">
-                <div className="reader-container">
+        <div className="reader-overlay">
+            <div className="reader-container">
 
-                    <button
-                        className="reader-close"
-                        onClick={() => dispatch(setLire(false))}
-                    >
-                        ✕
-                    </button>
+                <button
+                    className="reader-close"
+                    onClick={() => dispatch(setLire(false))}
+                >
+                    ✕
+                </button>
 
-                    <h4>{title}</h4>
+                <h4>{title}</h4>
 
-                    {/* PDF Viewer */}
-                    <iframe
-                        src={file_url}
-                        title="Book Reader"
-                        className="reader-frame"
-                    />
+                {loading && (
+                    <div className="loading">
+                        <div className="spinner"></div>
+                    </div>
+                )}
 
-                </div>
-            </div>}
-        </>
-    )
+                <iframe
+                    src={file_url}
+                    title="Book Reader"
+                    className="reader-frame"
+                    onLoad={() => setLoading(false)}
+                />
+
+            </div>
+        </div>
+    );
 }
