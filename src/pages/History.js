@@ -1,14 +1,19 @@
 import { useEffect,useState } from "react";
 import { useShowlivres } from "../app/data/showlivresData";
+import { setAcheter } from '../app/redux/detailescardSlice';
 import useLivres from "../app/data/database";
 import BookCard from "../components/home/bookcard";
 import '../css/history.css'
 import axios from "../api/axios";
 import useTelecharger from "../app/data/telechargerData";
+import useAcheter from "../app/data/acheterData";
+import { useDispatch } from 'react-redux'
 export default function History(){
+    const dispatch = useDispatch() 
     const [userEmprunts,setUserEmprunts] = useState([])
     const { lireShow ,fetchShowlivres } = useShowlivres();
     const { telechar,fetchTelecharger } = useTelecharger()
+    const { achater,fetchAchater,updateAcheter } = useAcheter()
     const {livres} = useLivres() 
     const ok = JSON.parse(localStorage.getItem('ok')) || null
     const iduser =  ok?JSON.parse(localStorage.getItem('user')).id:null
@@ -16,11 +21,15 @@ export default function History(){
     const idlireShow =  lireShow.map((show)=> show.user_id === iduser?show.livre_id:false)
     const idlireShowBooks = livres.filter((livre) => idlireShow.includes(livre.id));
 
-    const newemprunt = userEmprunts.map((emprunt)=> emprunt.adherent_id === iduser?emprunt.livre_id:false) 
+    const newemprunt = userEmprunts.map((emprunt)=> emprunt.user_id === iduser?emprunt.livre_id:false) 
     const idnewemprunt = livres.filter((livre) => newemprunt.includes(livre.id));
 
     const newtelechar = telechar.map((telech)=> telech.user_id === iduser?telech.livre_id:false)
     const idtelechargements = livres.filter((livre) => newtelechar.includes(livre.id));
+    
+    const newachat = achater.map((achat)=> achat.user_id === iduser?achat.livre_id:false)
+    const idachaters = livres.filter((livre) => newachat.includes(livre.id));
+     
     useEffect(()=>{
         fetchShowlivres()
     },[])
@@ -39,16 +48,27 @@ export default function History(){
     useEffect(()=>{
         fetchTelecharger()
     },[])
-    const idachats =  []
+    useEffect(()=>{
+        fetchAchater()
+    })
+    
     const [newnhostoy,setNewnhostoy] = useState([...idlireShowBooks])
     const  history = [
         { label:  'Mes lectures', action: () => setNewnhostoy([...idlireShowBooks]) },
         { label:  'Mes téléchargements', action: () => setNewnhostoy([...idtelechargements])},
-        { label:  'Mes achats', action: () => setNewnhostoy([...idachats])},
+        { label:  'Mes achats', action: () => setNewnhostoy([...idachaters])},
         { label:  'Mes emprunts', action: () =>  setNewnhostoy([...idnewemprunt])},
 
     ]
     
+
+    // if (status_paye === "paye") {
+    //     message = "📥 Livre acheté";
+    // } else if (status_paye === "en_attente") {
+    //     message = "⏳ Paiement en attente";
+    // } else if (status_paye === "refuse") {
+    //     message = "❌ Paiement refusé";
+    // }
     return(
         <div className="cards-f">
             <div style={{marginTop:'50px',marginBottom:'50px'}} className='cards-h'>
@@ -59,10 +79,17 @@ export default function History(){
 
                 {newnhostoy.length > 0 ?
                 <div className='cards'>
-                    {newnhostoy.map((b)=>
-                        
-                        <BookCard  key={b.id} book={b}/>
-                    )}
+                    
+                    {newnhostoy.map((b)=> {
+                        const achat = achater.find((a) => a.livre_id === b.id);
+                        const status = achat?.status;
+                        return( <div className='cards-achat'>
+                         <BookCard  key={b.id} book={b}/>
+                          <h3>{status}</h3>
+                          <p>{achat.status_paye}</p>
+                        </div>
+                   )})}
+                    
                 </div>:<span style={{color:'gray',padding:'129px 0',height:'100%',display:'flex',alignItems:'center',justifyContent:'center'}}>Aucun livre</span>}
             </div>
         </div>

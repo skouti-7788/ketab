@@ -53,24 +53,24 @@
     color: #fff;
     box-shadow: 0 6px 18px rgba(58, 171, 109, 0.3);
 }
-.achcard-info .btn-read:disabled {
-    border-color: #b5dfc8;
-    color: #b5dfc8;
-    cursor: not-allowed;
-    transform: none;
-}
-
 /* ── Télécharger ── */
 .achcard-info .btn-download {
     border: 1px solid #2e8b57;
     color: #2e8b57;
 }
+/*── disable lire et Telecharger ──*/
 .achcard-info .btn-download:hover {
     background: #2e8b57;
     color: #fff;
     box-shadow: 0 6px 18px rgba(46, 139, 87, 0.3);
 }
-
+.achcard-info .btn-read:disabled, 
+.achcard-info .btn-download:disabled {
+    border-color: #b5dfc8;
+    color: #b5dfc8;
+    cursor: not-allowed;
+    transform: none;
+}
 /* ── Emprunter ── */
 .achcard-info .btn-borrow {
     border: 1px solid #52c788;

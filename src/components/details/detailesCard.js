@@ -74,7 +74,7 @@ export default function DetailesCard() {
                     {
                     livre:oneCard.title,
                     livre_id:oneCard.id,
-                    adherent_id:  Number(user.id)?? 0,
+                    user_id:  Number(user.id)?? 0,
                     date_emprunt: new Date().toISOString().slice(0,10),
                     date_retour_prevue: detailescard.emprunter ?? '', 
                     }
@@ -171,11 +171,10 @@ export default function DetailesCard() {
                 <p>{descriptions}</p>
             </div>
 
-            <AchCard setShowPaye={setShowPaye} is_free={oneCard.is_free} bookId={oneCard.id}  book={oneCard.title} file_url={oneCard.pdf_url} />
+            <AchCard setShowPaye={setShowPaye}is_free={oneCard.is_free} bookId={oneCard.id} download_link={oneCard.download_link}  book={oneCard.title} file_url={oneCard.pdf_url} />
             <CategoryMem  oneCard={oneCard} allLivres={cards.livres}/>
             {opinions?.length > 0&&
-             (
-                <div className='opinions'>
+             (<div className='opinions'>
                     <h4>Opinions</h4>
                     <div className="opinions-list">
                         {opinions?.map((op) => (

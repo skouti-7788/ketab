@@ -1,23 +1,24 @@
 import '../../css/achCard.css'
 import '../../css/opinion.css'
-import { setEmprunter } from '../../app/redux/detailescardSlice'
+import { setEmprunter, setMessagePaye,setAcheter } from '../../app/redux/detailescardSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { Show } from '../../app/redux/logSlice'
 import useBook from '../../app/data/bookData'
 import { setLire } from '../../app/redux/profileSlice'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Reader from './lireLivre';
 import PaymentPage from './paymentPage'
 import { useNavigate } from 'react-router'
 import useTelecharger from '../../app/data/telechargerData'
-export default function AchCard({is_free=true,book,bookId,
+import useAcheter from '../../app/data/acheterData'
+export default function AchCard({is_free,book,bookId, 
     stats = { lire: 0, telecharger: 0, emprunter: 0, acheter: 0 },
-    setShowPaye,
-     file_url}) {
+    setShowPaye,file_url,download_link}) {
          
 
     useBook()
     const {telechargerBook} = useTelecharger()
+    const { achater,fetchAchater,acheterBook,updateAcheter } = useAcheter()   
     const ok = useSelector((state) => state.loguser.ok)
     const dispatch = useDispatch()
 
@@ -30,7 +31,9 @@ export default function AchCard({is_free=true,book,bookId,
     const [ville, setVille] = useState("")
     const [telephone, setTelephone] = useState("")
     const [selected, setSelected] = useState(null);
-
+    const [arret,setArret] = useState(false)
+    const achet = useSelector((state)=> state.detailescard)
+    
     // ✅ close modal
     const handleClose = () => {
         setShowDate(false)
@@ -63,7 +66,9 @@ export default function AchCard({is_free=true,book,bookId,
     const handleTelech = () =>{
     telechargerBook(bookId)
     }
-    
+    const handleAcheter = (title) => {
+        acheterBook(bookId,title)
+    }
 const methods = [
   {
     id: "pdf",
@@ -87,6 +92,22 @@ const methods = [
 ];
     const title  =  methods.find((m) =>  m.id === selected)?.title
     // const navigate = useNavigate()
+    useEffect(() => {
+        if(arret){}
+        fetchAchater()
+    },[arret])
+    const handleContinu = ()=>{
+    //  dispatch(setMessagePaye())
+     setArret(true)
+     setShowMethod(false);
+     setShowBuy(title==='Livre Physique'?true:false);
+     setShowPaye(title==='Livre PDF'?true:false);
+     handleAcheter(title);
+     const newacheter = achater.find((achat) => achat.livre_id === bookId ? achat.id : 0);
+     console.log(achater,'newacheter' ,newacheter,newacheter.id)
+     updateAcheter(newacheter.id, 'Paiement en attente')
+
+    }
     return (
         <div className='achcard'>
              <div className='achcard-info'>
@@ -96,13 +117,19 @@ const methods = [
                         disabled={!is_free}
                         onClick={() => dispatch(setLire(true))}
                     >
-                        {is_free ? "Lire" : "Non disponible"}
+                        Lire
                     </button>
                     <span className='btn-stat'>{stats.lire} lectures</span>
                 </div>
 
                 <div className='btn-wrapper'>
-                    <button className='btn-download' onClick={handleTelech}>Télécharger</button>
+                    {/* <a href={download_link} target='_blank' rel='noopener noreferrer'> */}
+                        <button 
+                     className='btn-download' 
+                     disabled={!is_free} 
+                     onClick={handleTelech}
+                     >Télécharger</button>
+                     {/* </a> */}
                     <span className='btn-stat'>{stats.telecharger} téléchargements</span>
                 </div>
 
@@ -114,10 +141,11 @@ const methods = [
                 </div>
 
                 <div className='btn-wrapper'>
+                    
                     <button className='btn-buy' onClick={() => setShowMethod(true)}>
                         Acheter
                     </button>
-                    <span className='btn-stat'>{stats.acheter} achats</span>
+                    <span className='btn-stat' >{stats.acheter} achats</span>
                 </div>
             </div>
             
@@ -191,9 +219,7 @@ const methods = [
                                 Vous avez choisi :{" "}
                                 <strong>{title}</strong>
                             </p>
-                            <button className="po-confirm-btn" onClick={()=>{setShowMethod(false);setShowBuy(title==='Livre Physique'?true:false);
-                                 setShowPaye(title==='Livre PDF'?true:false)
-                            }}>Continuer </button>
+                            <button className="po-confirm-btn" onClick={handleContinu}>Continuer </button>
                         </div>
                     )}
                    </div>
@@ -255,7 +281,7 @@ const methods = [
 
                         <button
                             className="opinion-btn"
-                            onClick={handleAchat}
+                            onClick={() => {handleAchat();dispatch(setMessagePaye('Livre acheté'))}}
                             disabled={!adresse || !ville || !telephone}
                         >
                             Confirmer la commande

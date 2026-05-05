@@ -14,6 +14,8 @@ const detailescardSlice = createSlice({
         emprunter:null,
         isShowLivre:null,
         isOpinion:'',
+        messagePaye:'',
+        achetId:0,
 
 
     },
@@ -35,10 +37,12 @@ const detailescardSlice = createSlice({
             setOpinion:(state,action)=>{state.opinions = action.payload},
             setIsOpinion:(state,action)=>{state.isOpinion = action.payload},
             clearIsOpinion:(state)=>{state.isOpinion = ''},
+            setMessagePaye:(state,action)=>{state.messagePaye = action.payload},
+            setAcheter:(state,action)=>{state.achetId = action.payload},
 
     }
 })
 export const {setShowrate,setIsRate,setRate,setShowFavorite,setShowOpinion,setShowShare,setEmprunter,
              setFavorite,clearRate,clearIsRate,setIsShowLivre,clearIsShowLivre,setOpinion,clearIsOpinion
-            ,setIsOpinion} = detailescardSlice.actions;
+            ,setIsOpinion,setMessagePaye,setAcheter} = detailescardSlice.actions;
 export default detailescardSlice.reducer;
