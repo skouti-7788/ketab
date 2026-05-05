@@ -32,6 +32,7 @@ export default function AchCard({is_free,book,bookId,
     const [telephone, setTelephone] = useState("")
     const [selected, setSelected] = useState(null);
     const [arret,setArret] = useState(false)
+    const [arretAchat,setArretAchat] = useState(false)
     const achet = useSelector((state)=> state.detailescard)
     
     // ✅ close modal
@@ -68,6 +69,7 @@ export default function AchCard({is_free,book,bookId,
     }
     const handleAcheter = (title) => {
         acheterBook(bookId,title)
+        setArretAchat(true)
     }
 const methods = [
   {
@@ -93,21 +95,32 @@ const methods = [
     const title  =  methods.find((m) =>  m.id === selected)?.title
     // const navigate = useNavigate()
     useEffect(() => {
-        if(arret){}
+        
         fetchAchater()
-    },[arret])
-    const handleContinu = ()=>{
-    //  dispatch(setMessagePaye())
+    },[])                   
+    const handleContinu = () => {
+     dispatch(setMessagePaye('La demande est incomplète'))
      setArret(true)
      setShowMethod(false);
      setShowBuy(title==='Livre Physique'?true:false);
      setShowPaye(title==='Livre PDF'?true:false);
      handleAcheter(title);
-     const newacheter = achater.find((achat) => achat.livre_id === bookId ? achat.id : 0);
-     console.log(achater,'newacheter' ,newacheter,newacheter.id)
-     updateAcheter(newacheter.id, 'Paiement en attente')
-
+     
+   
     }
+    useEffect(()=>{
+    const newacheter = achater?.find((achat) => achat.livre_id === bookId);
+
+    if(arret){
+    console.log(achater,'newacheter' ,newacheter,newacheter.id)
+    updateAcheter(newacheter.id,achet.messagePaye )
+    setArret(false)
+    }
+    if(arretAchat){
+      dispatch(setMessagePaye('Livraison du livre en attente'))
+      setArretAchat(false)
+    }
+    },[arretAchat])
     return (
         <div className='achcard'>
              <div className='achcard-info'>
@@ -219,7 +232,9 @@ const methods = [
                                 Vous avez choisi :{" "}
                                 <strong>{title}</strong>
                             </p>
-                            <button className="po-confirm-btn" onClick={handleContinu}>Continuer </button>
+                            <button className="po-confirm-btn" onClick={handleContinu}>
+                                Continuer
+                            </button>
                         </div>
                     )}
                    </div>
@@ -281,7 +296,7 @@ const methods = [
 
                         <button
                             className="opinion-btn"
-                            onClick={() => {handleAchat();dispatch(setMessagePaye('Livre acheté'))}}
+                            onClick={handleAchat}
                             disabled={!adresse || !ville || !telephone}
                         >
                             Confirmer la commande

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import '../../css/paymentpage.css';
- 
-
+import { useDispatch } from 'react-redux';
+import { setMessagePaye } from '../../app/redux/detailescardSlice';
 export default  function PaymentPage({bookData,setShowPaye}) {
-   
+    const dispatch = useDispatch()
     const [formData, setFormData] = useState({
         cardName: '',
         cardNumber: '',
@@ -90,7 +90,8 @@ export default  function PaymentPage({bookData,setShowPaye}) {
                         </div>
                     </div>
 
-                    <button type="submit" className="pay-button">
+                    <button type="submit" onClick={()=>dispatch(setMessagePaye('La demande est incomplète'))}
+                    className="pay-button">
                         Confirmer
                     </button>
                 </form>

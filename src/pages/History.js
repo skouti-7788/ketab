@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux'
 export default function History(){
     const dispatch = useDispatch() 
     const [userEmprunts,setUserEmprunts] = useState([])
+    const [showAchat,setShowAchet] = useState(false)
     const { lireShow ,fetchShowlivres } = useShowlivres();
     const { telechar,fetchTelecharger } = useTelecharger()
     const { achater,fetchAchater,updateAcheter } = useAcheter()
@@ -27,9 +28,12 @@ export default function History(){
     const newtelechar = telechar.map((telech)=> telech.user_id === iduser?telech.livre_id:false)
     const idtelechargements = livres.filter((livre) => newtelechar.includes(livre.id));
     
-    const newachat = achater.map((achat)=> achat.user_id === iduser?achat.livre_id:false)
-    const idachaters = livres.filter((livre) => newachat.includes(livre.id));
-     
+    const newachater = achater.filter(a => a.user_id === iduser).map(a => {
+    const livre = livres.find(l => l.id === a.livre_id);
+    return {...a,livre};});
+    
+    // const idachaters = newachater.map(a => a.livre);
+    
     useEffect(()=>{
         fetchShowlivres()
     },[])
@@ -50,14 +54,14 @@ export default function History(){
     },[])
     useEffect(()=>{
         fetchAchater()
-    })
+    },[])
     
     const [newnhostoy,setNewnhostoy] = useState([...idlireShowBooks])
     const  history = [
-        { label:  'Mes lectures', action: () => setNewnhostoy([...idlireShowBooks]) },
-        { label:  'Mes téléchargements', action: () => setNewnhostoy([...idtelechargements])},
-        { label:  'Mes achats', action: () => setNewnhostoy([...idachaters])},
-        { label:  'Mes emprunts', action: () =>  setNewnhostoy([...idnewemprunt])},
+        { label:  'Mes lectures', action: () => {setNewnhostoy([...idlireShowBooks]);setShowAchet(false)} },
+        { label:  'Mes téléchargements', action: () => {setNewnhostoy([...idtelechargements]);setShowAchet(false)}},
+        { label:  'Mes achats', action: () =>{ setNewnhostoy([...newachater]);setShowAchet(true)}},
+        { label:  'Mes emprunts', action: () =>  {setNewnhostoy([...idnewemprunt]);setShowAchet(false)}},
 
     ]
     
@@ -81,12 +85,14 @@ export default function History(){
                 <div className='cards'>
                     
                     {newnhostoy.map((b)=> {
-                        const achat = achater.find((a) => a.livre_id === b.id);
-                        const status = achat?.status;
-                        return( <div className='cards-achat'>
-                         <BookCard  key={b.id} book={b}/>
-                          <h3>{status}</h3>
-                          <p>{achat.status_paye}</p>
+                        return( <div className={showAchat?'cards-achat':''}>
+                         <BookCard  key={b.id} book={b.livre || b}/>
+                          {showAchat && (
+                            <div>
+                            <h3>{b.status}</h3>
+                            <p>{b.status_paye}</p>
+                            </div>
+                          )}
                         </div>
                    )})}
                     
